@@ -1,4 +1,4 @@
-**Django ELK Sample App**
+**SRE Dashboard App**
 ---
 Please follow the steps for app installation.
 Please note that the file paths are from windows, please use / for linux.
