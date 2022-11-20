@@ -1,0 +1,56 @@
+{% extends 'base_app/base_app_base.html' %}
+{% load static %}
+{% block body_block %}
+<style>
+    input {
+        width: 30%;
+      }
+    #id_query {
+        width: 80%;
+    }
+</style>
+
+<div class="container">
+    <hr>
+    <h5 class="title is-5">Add SLI</h5>
+    <h6 class="subtitle is-6">Add SLI and associate it to App</h6>
+    <hr>
+    <div class="box">
+        <section class="section">
+            <form method="post">
+                {% csrf_token %}
+                <div class="field">
+                    <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+                    <div class="control">
+                            {{ form.name }}
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="{{ form.query.id_for_label }}">{{ form.query.label }}</label>
+                    <div class="control">
+                            {{ form.query }}
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="{{ form.expression.id_for_label }}">{{ form.expression.label }}</label>
+                    <div class="control">
+                            {{ form.expression }}
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="{{ form.threshold.id_for_label }}">{{ form.threshold.label }}</label>
+                    <div class="control">
+                            {{ form.threshold }}
+                    </div>
+                </div>
+                <div class="field is-grouped">
+                    <div class="control">
+                    <button class="button is-small is-info is-rounded" type="submit" value="Submit">Submit</button>
+                    <a class="button is-small is-info is-rounded" href="{% url 'base_app:app-mon-list' %}">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </section>        
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+Django==3.*
+gunicorn
+requests
+plotly
+# Postgres
+psycopg2-binary
+# Celery modules
+celery
+redis
+flower
+# Prometheus
+prometheus-api-client
+# Extra utilities
+django-extensions

@@ -1,0 +1,120 @@
+version: '3.3'
+services:
+  web:
+    build:
+      context: ./sre_dashboard
+      dockerfile: Dockerfile.prod
+    command: gunicorn sre_dashboard.wsgi:application --bind 0.0.0.0:8000 --workers=3 --timeout 300
+    volumes:
+      - static_volume:/home/app/web/staticfiles
+    expose:
+      - 8000
+    environment:
+      - DEBUG=0
+      - SECRET_KEY=8881212
+      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 *
+      - SQL_ENGINE=django.db.backends.postgresql
+      - SQL_DATABASE=app_db_prod
+      - SQL_USER=app_db_user
+      - SQL_PASSWORD=Casablanca_123
+      - SQL_HOST=db
+      - SQL_PORT=5432
+      - DATABASE=postgres
+      - CELERY_BROKER_URL=redis://redis:6379
+      - CELERY_RESULT_BACKEND=redis://redis:6379
+      - PROMETHEUS_API_HOST=host.docker.internal
+      - PROMETHEUS_API_PORT=9090
+      - JIRA_HOST=mytest12123.atlassian.net
+      - JIRA_API_TOKEN=zhxQfCNNQgfZECEibxNy899E
+    depends_on:
+      - db
+  nginx:
+    build: 
+      context: ./nginx
+      dockerfile: Dockerfile.prod
+    volumes:
+      - static_volume:/home/app/web/staticfiles
+    ports:
+      - 80:80
+    depends_on:
+      - web
+  db:
+    image: postgres:12.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=app_db_user
+      - POSTGRES_PASSWORD=Casablanca_123
+      - POSTGRES_DB=app_db_prod
+  redis:
+    container_name: redis
+    image: redis:alpine
+    environment:
+      - TZ=America/New_York
+  celery:
+    build:
+      context: ./sre_dashboard
+      dockerfile: Dockerfile.prod
+    command: celery --app sre_dashboard worker --loglevel=info
+    environment:
+      - DEBUG=0
+      - SECRET_KEY=8881212
+      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 *
+      - SQL_ENGINE=django.db.backends.postgresql
+      - SQL_DATABASE=app_db_prod
+      - SQL_USER=app_db_user
+      - SQL_PASSWORD=Casablanca_123
+      - SQL_HOST=db
+      - SQL_PORT=5432
+      - DATABASE=postgres
+      - CELERY_BROKER_URL=redis://redis:6379
+      - CELERY_RESULT_BACKEND=redis://redis:6379
+      - PROMETHEUS_API_HOST=host.docker.internal
+      - PROMETHEUS_API_PORT=9090
+      - JIRA_HOST=mytest12123.atlassian.net
+      - JIRA_API_TOKEN=zhxQfCNNQgfZECEibxNy899E
+    depends_on:
+      - redis
+      - db
+  celery-beat:
+    build:
+      context: ./sre_dashboard
+      dockerfile: Dockerfile.prod
+    command: celery --app sre_dashboard beat --loglevel=debug --logfile=logs/celery_beat.log
+    environment:
+      - DEBUG=0
+      - SECRET_KEY=8881212
+      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 *
+      - SQL_ENGINE=django.db.backends.postgresql
+      - SQL_DATABASE=app_db_prod
+      - SQL_USER=app_db_user
+      - SQL_PASSWORD=Casablanca_123
+      - SQL_HOST=db
+      - SQL_PORT=5432
+      - DATABASE=postgres
+      - CELERY_BROKER_URL=redis://redis:6379
+      - CELERY_RESULT_BACKEND=redis://redis:6379
+      - PROMETHEUS_API_HOST=host.docker.internal
+      - PROMETHEUS_API_PORT=9090
+      - JIRA_HOST=mytest12123.atlassian.net
+      - JIRA_API_TOKEN=zhxQfCNNQgfZECEibxNy899E
+    depends_on:
+      - redis
+      - db
+  dashboard:
+    build:
+      context: ./sre_dashboard
+      dockerfile: Dockerfile.prod
+    command: celery --app sre_dashboard flower --port=5555
+    ports:
+      - 5555:5555
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379
+      - FLOWER_BASIC_AUTH=admin:MyAdmin123#
+    depends_on:
+      - web
+      - redis
+      - celery
+volumes:
+  static_volume:
+  postgres_data:

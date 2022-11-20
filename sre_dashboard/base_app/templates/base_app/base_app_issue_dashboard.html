@@ -1,0 +1,57 @@
+
+{% extends 'base_app/base_app_base.html' %}
+{% load static %}
+{% block body_block %}
+
+<div class='container'>
+    <hr>
+    <h5 class="title is-5">SLA Dashboard</h5>
+    <h6 class="subtitle is-6">Work insights</h6>
+    <hr>
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    {% autoescape off %}
+                    {{ issue_count_by_label_plot_div }}
+                    {% endautoescape %}
+                </td>
+                <td>
+                    {% autoescape off %}
+                    {{ issue_count_by_priority_plot_div }}
+                    {% endautoescape %}
+                </td>
+                <td>
+                    {% autoescape off %}
+                    {{ issue_count_by_assignee_plot_div }}
+                    {% endautoescape %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {% autoescape off %}
+                    {{ issue_count_by_date_plot_div }}
+                    {% endautoescape %}                    
+                </td>
+                <td>
+                    {% autoescape off %}
+                    {{ issue_count_by_month_plot_div }}
+                    {% endautoescape %}                    
+                </td>
+                <td>
+                    {% autoescape off %}
+                    {{ issue_count_by_year_plot_div }}
+                    {% endautoescape %}                    
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {% autoescape off %}
+                    {{ issue_sla_breakup_plot_div }}
+                    {% endautoescape %}                    
+                </td>
+            </tr>
+        </tbody>
+</div>
+
+{% endblock %}

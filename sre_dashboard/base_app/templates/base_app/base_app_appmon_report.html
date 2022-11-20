@@ -1,0 +1,43 @@
+
+{% extends 'base_app/base_app_base.html' %}
+{% load static %}
+{% block body_block %}
+<div class="container">
+    <hr>
+    <h5 class="title is-5">Apps</h5>
+    <h6 class="subtitle is-6">All tracked apps</h6>
+    <hr>
+    <div class="box">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>SLI Count</th>
+                    <th>Status</th>
+                    <th></th>                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for app in app_list %}
+                <tr>
+                    <td><a href="{% url 'base_app:app-detail' app_id=app.pk %}"">{{ app.name }}</a></td>
+                    <td>{{ app.slis.all | length }}</td>
+                    <td
+                        {% if app.status == "green" %}
+                            style="background-color: rgb(166, 241, 136); text-align: center;"
+                        {% elif app.status == "yellow" %}
+                            style="background-color: rgb(245, 247, 148); text-align: center;"
+                        {% else %}
+                            style="background-color: rgb(230, 122, 122); text-align: center;"
+                        {% endif %}
+                    ></td>
+                    <td>
+                        <a class="button is-small is-info is-rounded" href="{% url 'base_app:app-mon-update' pk=app.pk %}">Update SLIs</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

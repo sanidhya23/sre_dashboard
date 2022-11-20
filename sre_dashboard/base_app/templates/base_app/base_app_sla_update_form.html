@@ -1,0 +1,32 @@
+{% extends 'base_app/base_app_base.html' %}
+{% load static %}
+{% block body_block %}
+<div class="container">
+    <hr>
+    <div class="box">
+        <section class="section">
+            <form method="post">
+                {% csrf_token %}
+                <div class="field">
+                    <label for="{{ form.priority.id_for_label }}">{{ form.priority.label }}</label>
+                    <div class="control">
+                            {{ form.priority }}
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="{{ form.minutes.id_for_label }}">{{ form.minutes.label }}</label>
+                    <div class="control">
+                            {{ form.minutes }}
+                    </div>
+                </div>
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button class="button is-small is-info is-rounded" type="submit" value="Submit">Submit</button>
+                        <a class="button is-small is-info is-rounded"  href="{% url 'base_app:index' %}">Cancel</a>
+                    </div>
+                </div>
+            </form>    
+        </section>        
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base_app/base_app_base.html' %}
+{% load static %}
+{% block body_block %}
+<div class="container">
+    <hr>
+    <h5 class="title is-5">App Status</h5>
+    <h6 class="subtitle is-6">SLI details and status</h6>
+    <hr>
+    <div class="box">
+        <section class="section">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th colspan="5" 
+                            {% if app.status == "green" %}
+                                style="background-color: rgb(166, 241, 136); text-align: center;"
+                            {% elif app.status == "yellow" %}
+                                style="background-color: rgb(245, 247, 148); text-align: center;"
+                            {% else %}
+                                style="background-color: rgb(230, 122, 122); text-align: center;"
+                            {% endif %}
+                        >
+                        {{ app.name }}</th>
+                    </tr>
+                    <tr>
+                        <th>SLI</th>
+                        <th>Query</th>
+                        <th>Threshold</th>
+                        <!-- <th>Expression</th> -->                        
+                        <th>Last Value</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sli in app.slis.all %}
+                    <tr>
+                        <td>{{ sli.name }}</td>
+                        <td>{{ sli.query }}</td>
+                        <td>{{ sli.threshold }}</td>
+                        <!-- <td>{{ sli.expression }}</td>  -->                   
+                        <td 
+                            {% if sli.is_threshold_breached %}
+                                style="background-color: rgb(236, 117, 117);"
+                            {% else %}
+                                style="background-color: rgb(194, 236, 117);"
+                            {% endif %}
+                        >
+                            {{ sli.data_points.all.first.value }}
+                        </td>
+                        <td>
+                            {{ sli.data_points.all.first.created_at|date:"d/m/Y" }} {{ sli.data_points.all.first.created_at|time:"H:i" }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a class="button is-small is-link is-rounded" href="{% url 'base_app:app-mon-list' %}">App List</a>
+        </section>        
+    </div> <!-- box -->
+    <div class="box">
+        {% autoescape off %}
+        {{ sli_by_date_plot_div }}
+        {% endautoescape %}        
+    </div>    
+</div>
+{% endblock %}

@@ -1,0 +1,74 @@
+<html>
+    <head>
+        {% load static %}
+        {# load django_simple_bulma #}
+        {# bulma #}
+        {# font_awesome #}
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+        <script src="https://cdn.plot.ly/plotly-2.16.1.min.js"></script>
+        {% block extra_js %}
+        {% endblock %}
+        </head>
+        <body>
+            {# Navbar #}
+            <nav class="navbar is-dark">
+                <div class="navbar-brand">
+
+                    <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+        
+                <div id="navbarExampleTransparentExample" class="navbar-menu">
+                    <div class="navbar-start">
+                        <a class="navbar-item" href="{% url 'base_app:index' %}">
+                            Home
+                        </a>
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <!-- <a class="navbar-link" href="/documentation/overview/start/"> -->
+                            <a class="navbar-link">
+                                Tickets
+                            </a>
+                            <div class="navbar-dropdown is-boxed">
+                                <a class="navbar-item" href="{% url 'base_app:issue-sla-report' %}">
+                                    Issue SLA Report
+                                </a>
+                                <a class="navbar-item" href="{% url 'base_app:issue-sla-update' %}">
+                                    Issue SLA Update
+                                </a>
+                                <a class="navbar-item" href="{% url 'base_app:issue-dashboard' %}">
+                                    Issue Dashboard
+                                </a>
+                            </div>
+                        </div>
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <!-- <a class="navbar-link" href="/documentation/overview/start/"> -->
+                            <a class="navbar-link">
+                                Monitoring
+                            </a>
+                            <div class="navbar-dropdown is-boxed">
+                                <a class="navbar-item" href="{% url 'base_app:app-mon-list' %}">
+                                    App List
+                                </a>
+                                <a class="navbar-item" href="{% url 'base_app:app-mon-add' %}">
+                                    Add App
+                                </a>
+                                <a class="navbar-item" href="{% url 'base_app:sli-add' %}">
+                                    Add SLI
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="navbar-end">
+                    </div>
+                </div>
+            </nav>
+            {# Block to place page content #}
+            {% block body_block %}
+            {% endblock %}
+        </body>
+</html>

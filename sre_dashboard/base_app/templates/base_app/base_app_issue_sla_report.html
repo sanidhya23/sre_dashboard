@@ -1,0 +1,65 @@
+
+{% extends 'base_app/base_app_base.html' %}
+{% load static %}
+{% block body_block %}
+<div class="container">
+    <hr>
+    <h5 class="title is-5">SLA Report</h5>
+    <h6 class="subtitle is-6">Tickets and their SLA compliance</h6>
+    <hr>
+    <div class="box">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID#</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>Created</th>
+                    <th>Updated</th>
+                    <th>Minutes in work</th>
+                    <th>SLA met</th>
+                    <th>Summary</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for issue in issue_list %}
+                <tr>
+                    <td>{{ issue.key }}</td>
+                    <td>{{ issue.status_name }}</td>
+                    <td>{{ issue.priority.name }}</td>
+                    <td>{{ issue.created|date:"d/m/Y" }} {{ issue.created|time:"H:i" }}</td>
+                    <td>{{ issue.updated|date:"d/m/Y" }} {{ issue.updated|time:"H:i" }}</td>
+                    <td>{{ issue.workMinutes }}</td>
+                    <td
+                        {% if issue.isInSLA %}
+                            style="background-color: rgb(166, 241, 136);"
+                        {% else %}
+                            style="background-color: rgb(230, 122, 122);"
+                        {% endif %}
+                    >{{ issue.isInSLA }}</td>
+                    <td>{{ issue.summary }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="box">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Priority</th>
+                    <th>SLA Threshold (minutes)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for issue_sla in issue_sla_list %}
+                <tr>
+                    <td>{{ issue_sla.priority.name }}</td>
+                    <td>{{ issue_sla.minutes }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
