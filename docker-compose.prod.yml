@@ -24,8 +24,8 @@ services:
       - CELERY_RESULT_BACKEND=redis://redis:6379
       - PROMETHEUS_API_HOST=host.docker.internal
       - PROMETHEUS_API_PORT=9090
-      - JIRA_HOST=mytest12123.atlassian.net
-      - JIRA_API_TOKEN=zhxQfCNNQgfZECEibxNy899E
+      - JIRA_HOST=12123.atlassian.net
+      - JIRA_API_TOKEN=QgfZECEibxNy899Eddwed
     depends_on:
       - db
   nginx:
@@ -71,8 +71,8 @@ services:
       - CELERY_RESULT_BACKEND=redis://redis:6379
       - PROMETHEUS_API_HOST=host.docker.internal
       - PROMETHEUS_API_PORT=9090
-      - JIRA_HOST=mytest12123.atlassian.net
-      - JIRA_API_TOKEN=zhxQfCNNQgfZECEibxNy899E
+      - JIRA_HOST=12123.atlassian.net
+      - JIRA_API_TOKEN=QgfZECEibxNy899Eddwed
     depends_on:
       - redis
       - db
@@ -96,8 +96,8 @@ services:
       - CELERY_RESULT_BACKEND=redis://redis:6379
       - PROMETHEUS_API_HOST=host.docker.internal
       - PROMETHEUS_API_PORT=9090
-      - JIRA_HOST=mytest12123.atlassian.net
-      - JIRA_API_TOKEN=zhxQfCNNQgfZECEibxNy899E
+      - JIRA_HOST=12123.atlassian.net
+      - JIRA_API_TOKEN=QgfZECEibxNy899Eddwed
     depends_on:
       - redis
       - db
