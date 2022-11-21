@@ -3,8 +3,7 @@ from requests.auth import HTTPBasicAuth
 import json
 from pprint import pprint
 
-def get_project_issues(host='mytest12123.atlassian.net', project='TESTTEAM1', 
-    email='sannidhya.pagare@gmail.com', api_token='zhxQfCNNQgfZECEibxNy899E'):
+def get_project_issues(host, project, email, api_token):
 
     url = f"https://{host}/rest/api/3/search"
     auth = HTTPBasicAuth(email, api_token)
