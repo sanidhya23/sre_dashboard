@@ -11,3 +11,4 @@ docker compose -f docker-compose.prod.yml up --build -d
 ```
 ---
 
+[![Watch the demo](https://img.youtube.com/vi/3_1k6DgWnNc/maxresdefault.jpg)](https://youtu.be/3_1k6DgWnNc)
